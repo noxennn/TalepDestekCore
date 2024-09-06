@@ -1,0 +1,34 @@
+﻿@{
+	Layout = null;
+}
+
+<!doctype html>
+<html class="no-js h-100" lang="en">
+@await Html.PartialAsync("/Views/StudentLayoutPartial/_StudentHeaderPartial.cshtml")
+
+<body class="h-100">
+
+	<div class="container-fluid">
+		<div class="row">
+			
+			@await Html.PartialAsync("/Views/StudentLayoutPartial/_StudentSideBarPartial.cshtml")
+			
+			
+			<main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+				@await Html.PartialAsync("/Views/StudentLayoutPartial/_StudentNavbarPartial.cshtml")
+				
+				
+				<div class="main-content-container container-fluid px-4">
+					
+
+					@RenderBody()
+
+				</div>
+				@await Html.PartialAsync("/Views/StudentLayoutPartial/_StudentFooterPartial.cshtml")
+			</main>
+		</div>
+	</div>
+	@await Html.PartialAsync("/Views/StudentLayoutPartial/_StudentScriptPartial.cshtml")
+	
+</body>
+</html>
