@@ -1,0 +1,22 @@
+﻿@model DTOLayer.DTOs.AppRoleDTOs.CreateRoleDTO
+@{
+	ViewData["Title"] = "CreateRole";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<div class="card card-small mb-6">
+	<div class="card-header border-bottom">
+		<h6 class="m-0">Rol Ekle</h6>
+	</div>
+	<br />
+	<div class="col-sm-12 col-md-6">
+		<form method="post">
+			<div class="form-group col-md-6">
+				<input type="text" class="form-control" asp-for="RoleName" placeholder="Rol adını giriniz">
+				<br />
+				<button class="btn btn-primary"> Rolü Ekle</button>
+			</div>
+		</form>
+	</div>
+</div>

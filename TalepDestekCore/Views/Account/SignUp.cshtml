@@ -1,15 +1,125 @@
-﻿
+﻿@model DTOLayer.DTOs.AppUserDTOs.AppUserSignUpDTO
 @{
-    Layout = null;
+	Layout = null;
 }
 
-<!DOCTYPE html>
-
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>SignUp</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="~/signup-form-02/fonts/icomoon/style.css">
+
+	<link rel="stylesheet" href="~/signup-form-02/css/owl.carousel.min.css">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="~/signup-form-02/css/bootstrap.min.css">
+
+	<!-- Style -->
+	<link rel="stylesheet" href="~/signup-form-02/css/style.css">
+
+	<title>Talep Destek Kayıt Ol</title>
 </head>
 <body>
+
+
+	<div class="d-lg-flex half">
+		<div class="bg order-1 order-md-2" style="background-image: url('images/bg_1.jpg');"></div>
+		<div class="contents order-2 order-md-1">
+
+			<div class="container">
+				<div class="row align-items-center justify-content-center">
+					<div class="col-md-7 py-5">
+						<h3>Kayıt Ol</h3>
+						<p class="mb-4">Bir öğrenci hesabınız yoksa Talep Destek Sistemine kayıt olun</p>
+						<form method="post">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group first">
+										<label>Ad</label>
+										<input type="text" asp-for="Name" class="form-control" placeholder="örn. Ahmet" name="Name">
+										<span asp-validation-for="Name" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group first">
+										<label>Soyad</label>
+										<input type="text" asp-for="Surname" class="form-control" placeholder="örn. Kılıç" name="Surname">
+										<span asp-validation-for="Surname" class="text-danger"></span>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group first">
+										<label>E-posta</label>
+										<input type="email" asp-for="Email" class="form-control" placeholder="örn. ahmet@domain.com" name="Email">
+										<span asp-validation-for="Email" class="text-danger"></span>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group first">
+										<label>Telefon Numarası</label>
+										<input type="text" asp-for="PhoneNumber" class="form-control" placeholder="+(90) 000 000 00 00" name="PhoneNumber">
+										<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group first">
+										<label>TC Kimlik No</label>                                       @*  Tcno UserName'de  kullanılacak*@
+										<input type="text" asp-for="UserName" class="form-control" placeholder="11 Haneli TC Kimlik No" name="UserName">
+										<span asp-validation-for="UserName" class="text-danger"></span>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group last mb-3">
+										<label>Şifre</label>
+										<input type="password" asp-for="Password" class="form-control" placeholder="Şifreniz" name="Password" >
+										<span asp-validation-for="Password" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group last mb-3">
+										<label>Şifre Onay</label>
+										<input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="Şifreniz" name="ConfirmPassword" >
+										<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<button class="btn btn-outline-dark">
+										<span> Kayıt Ol</span>
+									</button>
+								</div>
+								<div class="col-md-6">
+									<a href="/Account/SignIn" class="read-more-1 btn">Hesabınız var mı? Giriş Yapın</a>
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+	<script src="~/signup-form-02/js/jquery-3.3.1.min.js"></script>
+	<script src="~/signup-form-02/js/popper.min.js"></script>
+	<script src="~/signup-form-02/js/bootstrap.min.js"></script>
+	<script src="~/signup-form-02/js/main.js"></script>
 </body>
 </html>

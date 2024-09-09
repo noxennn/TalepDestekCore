@@ -15,13 +15,11 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\" />
     <Folder Include="Areas\RequestOfficer\Data\" />
     <Folder Include="Areas\RequestOfficer\Models\" />
     <Folder Include="Areas\RequestOfficer\Views\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Models\" />
-    <Folder Include="Views\SignIn\" />
   </ItemGroup>
 
   <ItemGroup>

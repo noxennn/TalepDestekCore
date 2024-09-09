@@ -1,7 +1,10 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules.AppUserValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
+using DTOLayer.DTOs.AppUserDTOs;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -36,6 +39,8 @@ namespace BusinessLayer.Container
             services.AddScoped<IUnitService, UnitManager>();
             services.AddScoped<IUnitDal, EfUnitDal>();
 
-        }
+			services.AddScoped<IValidator<AppUserSignUpDTO>, AppUserSignUpValidator>();
+			services.AddScoped<IValidator<AppUserSignInDTO>, AppUserSignInValidator>();
+		}
     }
 }
