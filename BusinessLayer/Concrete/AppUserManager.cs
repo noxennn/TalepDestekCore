@@ -13,7 +13,12 @@ namespace BusinessLayer.Concrete
     {
         IAppUserDal _appUserDal;
 
-        public void TDelete(AppUser t)
+		public AppUserManager(IAppUserDal appUserDal)
+		{
+			_appUserDal = appUserDal;
+		}
+
+		public void TDelete(AppUser t)
         {
             _appUserDal.Delete(t);
         }

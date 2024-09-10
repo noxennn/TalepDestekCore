@@ -13,7 +13,12 @@ namespace BusinessLayer.Concrete
     {
         ICategoryDal _categoryDal;
 
-        public void TDelete(Category t)
+		public CategoryManager(ICategoryDal categoryDal)
+		{
+			_categoryDal = categoryDal;
+		}
+
+		public void TDelete(Category t)
         {
            _categoryDal.Delete(t);
         }

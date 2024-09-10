@@ -1,0 +1,32 @@
+﻿@using DTOLayer.DTOs.UnitDTOs
+@model CreateUnitDTO
+@{
+    ViewData["Title"] = "CreateUnit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<div class="row">
+	<div class="col">
+		<div class="card card-small mb-4">
+			<div class="card-header border-bottom">
+				<h6 class="m-0">Birim Ekle</h6>
+			</div>
+			<div class="card-body pb-2">
+				<div class="row">
+					<div class="col-sm-12 col-md-6">
+						<form method="post">
+							<div class="form-group col-md-6">
+								<input type="text" class="form-control" asp-for="UnitName" placeholder="Rol adını giriniz">
+								<br />
+								<button class="btn btn-outline-primary"> Birimi Ekle</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<a href="/Admin/Unit/Index" class="btn btn-outline-danger">İptal</a>
+

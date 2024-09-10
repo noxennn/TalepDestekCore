@@ -9,9 +9,24 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-    public class UnitManager:IUnitService
+    public class UnitManager : IUnitService
     {
         IUnitDal _unitDal;
+
+        public UnitManager(IUnitDal unitDal)
+        {
+            _unitDal = unitDal;
+        }
+
+        public IEnumerable<Unit> TGetListofActiveUnits()
+        {
+            return _unitDal.GetListByFilter(u => u.Status == true);
+        }
+
+        public IEnumerable<Unit> TGetListofInactiveUnits()
+        {
+            return _unitDal.GetListByFilter(u => u.Status == false);
+        }
 
         public void TDelete(Unit t)
         {
@@ -30,7 +45,7 @@ namespace BusinessLayer.Concrete
 
         public void TInsert(Unit t)
         {
-           _unitDal.Insert(t);
+            _unitDal.Insert(t);
         }
 
         public void TUpdate(Unit t)

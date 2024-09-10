@@ -1,14 +1,15 @@
 ﻿@using EntityLayer.Concrete
 @model List<AppRole>
+
 @{
-	ViewData["Title"] = "Index";
+	ViewData["Title"] = "Roller";
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 	int count = 0;
 }
-
 <br />
 <span class="text-uppercase page-subtitle">Roller</span>
-
+<br />
+<br />
 <div class="row">
 	<div class="col">
 		<div class="card card-small mb-4">
@@ -25,46 +26,79 @@
 							<th scope="col" class="border-0">Rolü Güncelle</th>
 						</tr>
 					</thead>
-					@if (Model.Any())
-					{
-						<tbody>
-							@foreach (var item in Model)
-							{
-								count++;
-								<tr>
-									<td>@count</td>
-									<td>@item.Name</td>
-									<td><a href="#" class="btn btn-outline-danger">Rolü Sil</a></td>
-									<td><a href="#" class="btn btn-outline-success">Rolü Güncelle</a></td>
-
-								</tr>
-							}
-						</tbody>
-					}
-					else
-					{
-						<tbody>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							count++;
 							<tr>
-								<td class="alert alert-danger">
-									Rol Bulunamadı
+								<td>@count</td>
+								<td>@item.Name</td>
+								<td>
+									<button class="btn btn-outline-danger"
+											data-toggle="modal"
+											data-target="#deleteModal"
+											onclick="setDeleteRoleData('@item.Id', '@item.Name')">
+										Rolü Sil
+									</button>
 								</td>
-								<td class="alert alert-danger">
-									#
-								</td>
-								<td class="alert alert-danger">
-									#
-								</td>
-								<td class="alert alert-danger">
-									#
+								<td>
+									<a href="#"
+									   class="btn btn-outline-warning"
+									   onclick="confirmEdit('@item.Id', '@item.Name')">Rolü Güncelle</a>
 								</td>
 							</tr>
-						</tbody>
-					}
-
+						}
+					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 </div>
 
-<td><a href="/Admin/Role/CreateRole/" class="btn btn-outline-primary">Rol Ekle</a></td>
+<a href="/Admin/Role/CreateRole/" class="btn btn-outline-primary">Rol Ekle</a>
+<!-- Modal for Confirmation -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="deleteModalLabel">Rolü Sil</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p id="deleteModalBody"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+				<button type="button" class="btn btn-danger" id="confirmDeleteBtn">Sil</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- JavaScript for setting the modal data and handling delete confirmation -->
+<script type="text/javascript">
+	function setDeleteRoleData(roleId, roleName) {
+		// Rol adını modal penceresinde göster
+		document.getElementById('deleteModalBody').innerText = roleName + " rolünü silmek istediğinize emin misiniz?";
+
+		// Sil butonuna basıldığında yönlendirme yap
+		document.getElementById('confirmDeleteBtn').onclick = function () {
+			if (roleId <= 3) {
+				alert(roleName + ' rolü silinemez!');
+				$('#deleteModal').modal('hide'); // Modal'ı kapat
+			} else {
+				window.location.href = '/Admin/Role/DeleteRole/' + roleId;
+			}
+		};
+	}
+	function confirmEdit(roleId, roleName) {
+		// Eğer rol ID'si 3'ten küçükse güncellemeye izin verme
+		if (roleId <= 3) {
+			alert(roleName + ' rolü güncellenemez!');
+		} else {
+			window.location.href = '/Admin/Role/EditRole/' + roleId;
+		}
+	}
+</script>

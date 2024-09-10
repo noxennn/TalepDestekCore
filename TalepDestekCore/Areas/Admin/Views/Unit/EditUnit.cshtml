@@ -1,0 +1,39 @@
+﻿@using DTOLayer.DTOs.UnitDTOs
+@model EditUnitDTO
+
+@{
+    ViewData["Title"] = "EditUnit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<div class="row">
+	<div class="col">
+		<div class="card card-small mb-4">
+			<div class="card-header border-bottom">
+				<h6 class="m-0">Birim Güncelle</h6>
+			</div>
+			<div class="card-body pb-2 ">
+				<div class="row">
+					<div class="col-md-6">
+						<form method="post">
+							@Html.HiddenFor(x => x.UnitID)
+							<div class="form-group">
+								<label>Birim Adı: </label>
+								<input type="text" class="form-control" asp-for="UnitName" />
+							</div>
+							<button class="btn btn-outline-primary">Birimi Güncelle</button>
+						</form>
+					</div>
+				</div>
+				<br />
+				<div class="row">
+					<div class="col-md-6">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<a href="/Admin/Unit/Index" class="btn btn-outline-danger">İptal</a>

@@ -5,6 +5,7 @@ using DTOLayer.DTOs.AppUserDTOs;
 using EntityLayer.Concrete;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -13,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider).AddEntityFrameworkStores<Context>();
+builder.Services.AddIdentity<AppUser,AppRole>().AddEntityFrameworkStores<Context>().AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider).AddEntityFrameworkStores<Context>();
 builder.Services.AddDbContext<Context>();
 builder.Services.AddHttpClient();
 
@@ -42,8 +43,13 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 
 builder.Services.AddMvc();
-
-
+//Login Path
+builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme, options =>
+{
+	options.LoginPath = "/Account/SignIn/";
+	//options.LogoutPath = "/Login/Logout";
+	//options.AccessDeniedPath = "/Error/Error404";
+});
 
 var app = builder.Build();
 

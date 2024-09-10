@@ -12,7 +12,13 @@ namespace BusinessLayer.Concrete
     public class ActivityManager : IActivityService
     {
         IActivityDal _activityDal;
-        public void TDelete(Activity t)
+
+		public ActivityManager(IActivityDal activityDal)
+		{
+			_activityDal = activityDal;
+		}
+
+		public void TDelete(Activity t)
         {
             _activityDal.Delete(t);
         }

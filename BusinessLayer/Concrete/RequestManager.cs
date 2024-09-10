@@ -13,7 +13,12 @@ namespace BusinessLayer.Concrete
     {
         IRequestDal _requestDal;
 
-        public void TDelete(Request t)
+		public RequestManager(IRequestDal requestDal)
+		{
+			_requestDal = requestDal;
+		}
+
+		public void TDelete(Request t)
         {
             _requestDal.Delete(t);
         }
