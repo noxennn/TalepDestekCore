@@ -1,0 +1,44 @@
+﻿@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>@ViewBag.UserName için Rol Atama</h1>
+
+
+
+
+<br />
+<div class="row">
+	<div class="col">
+		<div class="card card-small mb-4">
+			<div class="card-header border-bottom">
+				<h6 class="m-0">Rol Atama</h6>
+			</div>
+			<div class="card-body pb-2 ">
+				<div class="row">
+					<div class="col-md-6">
+						<form method="post" asp-action="AssignRole" asp-controller="User">
+							<input type="hidden" name="UserId" value="@ViewBag.UserId" />
+
+							<div class="form-group">
+								<label for="roles">Roller</label>
+								@Html.DropDownList("SelectedRoleId", (IEnumerable<SelectListItem>)ViewBag.Roles, "Bir rol seçin", new { @class = "form-control" })
+							</div>
+
+							<button type="submit" class="btn btn-primary">Rol Değişikliğini Kaydet</button>
+						</form>
+					</div>
+				</div>
+				<br />
+				<div class="row">
+					<div class="col-md-6">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<a href="/Admin/User/Index" class="btn btn-outline-danger pl-4 pr-4">İptal</a>

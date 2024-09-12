@@ -6,9 +6,16 @@
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 	int count = 0;
 }
+
 <br />
-<span class="text-uppercase page-subtitle">Roller</span>
+<span class="text-uppercase page-subtitle ml-1">Roller</span>
 <br />
+<br />
+<div class="row">
+	<div class="col ml-1">
+			<a href="/Admin/Role/CreateRole/" class="btn btn-outline-primary">Rol Ekle</a>
+	</div>
+</div>
 <br />
 <div class="row">
 	<div class="col">
@@ -55,7 +62,7 @@
 	</div>
 </div>
 
-<a href="/Admin/Role/CreateRole/" class="btn btn-outline-primary">Rol Ekle</a>
+
 <!-- Modal for Confirmation -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">

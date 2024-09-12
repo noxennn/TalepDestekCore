@@ -15,6 +15,7 @@ namespace EntityLayer.Concrete
         public string? UnitName { get; set; }  //Birim Adı
         public bool? Status { get; set; } = true;
         public ICollection<Request> Requests { get; set; }
+		public ICollection<OfficerUnit> OfficerUnits { get; set; } // İlişkili kullanıcılar
 
-    }
+	}
 }

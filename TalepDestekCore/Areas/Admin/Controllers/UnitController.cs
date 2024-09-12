@@ -22,10 +22,10 @@ namespace TalepDestekCore.Areas.Admin.Controllers
         }
 
         [Route("Index")]
-        public IActionResult Index(int? page)
+        public  IActionResult Index(/*int? page*/)
         {
-			int pageSize = 10;
-			int pageNumber = page ?? 1;
+			//int pageSize = 10;
+			//int pageNumber = page ?? 1;
 			// Başlangıçta aktif birimleri göster
             //Sayfalama yap
 			var activeUnits = _unitService.TGetListofActiveUnits();
@@ -36,6 +36,7 @@ namespace TalepDestekCore.Areas.Admin.Controllers
 
             return View();
         }
+
         [HttpGet]
         [Route("CreateUnit")]
         public IActionResult CreateUnit()

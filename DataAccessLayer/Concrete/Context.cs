@@ -14,13 +14,14 @@ namespace DataAccessLayer.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=YusufEmre\\SQLEXPRESS;Database=TalepDestekCore;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=YusufEmre\\SQLEXPRESS;Database=TalepDestekCore;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true");
         }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<RequestActivity> RequestActivities { get; set; }
         public DbSet<Unit> Units { get; set; }
+        public DbSet<OfficerUnit> OfficerUnits { get; set; }
 
 
 
@@ -28,18 +29,20 @@ namespace DataAccessLayer.Concrete
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Request ilişkileri
+			base.OnModelCreating(modelBuilder);
+			//Request ilişkileri
 
-            //RequestUserID Foreign Key From AppUser.UserID
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Request>()
+			//RequestUserID Foreign Key From AppUser.UserID
+
+
+			modelBuilder.Entity<Request>()
                 .HasOne(r=>r.User)
                 .WithMany(u=>u.SentRequests)
                 .HasForeignKey(r=>r.RequestUserID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //RequestCategoryID Foreign Key From Category.CategoryID
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Request>()
                 .HasOne(r => r.Category)
                 .WithMany(c => c.Requests)
@@ -47,7 +50,7 @@ namespace DataAccessLayer.Concrete
                 .OnDelete(DeleteBehavior.Restrict);
 
             //RequestLastActivityID Foreign Key From Activity.ActivityID
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Request>()
                 .HasOne(r => r.Activity)
                 .WithMany(a => a.Requests)
@@ -55,7 +58,7 @@ namespace DataAccessLayer.Concrete
                 .OnDelete(DeleteBehavior.Restrict);
 
             //RequestUnitID Foreign Key From Unit.UnitID
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Request>()
                 .HasOne(r=>r.Unit)
                 .WithMany(u=>u.Requests)
@@ -63,7 +66,7 @@ namespace DataAccessLayer.Concrete
                 .OnDelete(DeleteBehavior.Restrict);
 
             //AssignedUserID Foreign Key From AppUser.UserID
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Request>()
                 .HasOne(r => r.AssignedUser)
                 .WithMany(a => a.AssignedRequests)
@@ -73,7 +76,7 @@ namespace DataAccessLayer.Concrete
 
             //RequestActivity ilişkileri
             //RequestID Foreign Key From Request.RequestID
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<RequestActivity>()
                 .HasOne(r => r.Request)
                 .WithMany(a => a.RequestActivities)
@@ -81,7 +84,7 @@ namespace DataAccessLayer.Concrete
                 .OnDelete(DeleteBehavior.Restrict);
 
             //ActivityStatusID Foreign Key From Activity.ActivityID
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<RequestActivity>()
                 .HasOne(r => r.Activity)
                 .WithMany(a => a.RequestActivities)
@@ -89,7 +92,7 @@ namespace DataAccessLayer.Concrete
                 .OnDelete(DeleteBehavior.Restrict);
 
             //AssignedUserID Foreign Key From AppUser.UserID
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<RequestActivity>()
                 .HasOne(r => r.AssignedUser)
                 .WithMany(a => a.AssignedActivities)
@@ -97,7 +100,7 @@ namespace DataAccessLayer.Concrete
                 .OnDelete(DeleteBehavior.Restrict);
 
             //RequestActivityUserID Foreign Key From AppUser.UserID
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<RequestActivity>()
                 .HasOne(r => r.RequestActivityUser)
                 .WithMany(u => u.RequestActivities)
@@ -105,14 +108,32 @@ namespace DataAccessLayer.Concrete
                 .OnDelete(DeleteBehavior.Restrict);
 
             //NewActivityStatusID Foreign Key From Activity.ActivityID
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<RequestActivity>()
                 .HasOne(r => r.NewActivity)
                 .WithMany(a => a.NewRequestActivities)
                 .HasForeignKey(r => r.NewActivityStatusID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-        }
+			//Unit Claims
+			//NewActivityStatusID Foreign Key From Activity.ActivityID
+
+			// AppUser ve UnitClaims arasındaki ilişki
+			modelBuilder.Entity<OfficerUnit>()
+				.HasOne(uc => uc.User) // UnitClaims sınıfındaki User ile ilişkiyi tanımlar
+				.WithMany(u => u.OfficerUnits) 
+				.HasForeignKey(uc => uc.UserID) 
+				.OnDelete(DeleteBehavior.Cascade); // Silindiğinde ilgili UnitClaims'i de sil
+
+
+			// Unit ve UnitClaims arasındaki ilişki
+			modelBuilder.Entity<OfficerUnit>()
+				.HasOne(uc => uc.Unit) // UnitClaims sınıfındaki Unit ile ilişkiyi tanımlar
+				.WithMany(u=>u.OfficerUnits) 
+				.HasForeignKey(uc => uc.UnitID) 
+				.OnDelete(DeleteBehavior.Cascade); // Silindiğinde ilgili UnitClaims'i de sil
+
+		}
     }
 
 

@@ -9,7 +9,7 @@ namespace BusinessLayer.Abstract
 {
     public interface IUnitService : IGenericService<Unit>
     {
-        IEnumerable<Unit> TGetListofActiveUnits();
-        IEnumerable<Unit> TGetListofInactiveUnits();
+        List<Unit> TGetListofActiveUnits();
+        List<Unit> TGetListofInactiveUnits();
     }
 }

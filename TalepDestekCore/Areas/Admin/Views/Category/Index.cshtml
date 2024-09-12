@@ -1,65 +1,64 @@
-﻿
-
-@{
+﻿@{
 	ViewData["Title"] = "Index";
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <br />
-<span class="text-uppercase page-subtitle">Birimler</span>
+<span class="text-uppercase page-subtitle ml-1">Kategoriler</span>
 <br />
 <br />
-
-<!-- Butonlar için Button Group -->
-
 <div class="row">
 	<div class="col ml-1">
 		<div class="btn-group" role="group" aria-label="Unit Status">
-			<button type="button" class="btn btn-primary" onclick="showActiveUnits()">Aktif Birimleri Göster</button>
-			<button type="button" class="btn btn-secondary" onclick="showInactiveUnits()">Pasif Birimleri Göster</button>
+			<button type="button" class="btn btn-primary" onclick="showActiveCategories()">Aktif Kategorileri Göster</button>
+			<button type="button" class="btn btn-secondary" onclick="showInactiveCategories()">Pasif Kategorileri Göster</button>
 		</div>
-		<a href="/Admin/Unit/CreateUnit/" class="btn btn-outline-primary ml-5">Birim Ekle</a>
+		<a href="/Admin/Category/CreateCategory/" class="btn btn-outline-primary ml-5">Kategori Ekle</a>
 	</div>
+
 </div>
+<!-- Butonlar için Button Group -->
+
+
 <br />
 <br />
 
 <!-- Aktif Birimler Tablosu -->
-<div id="activeUnitsSection">
+<div id="activeCategoriesSection">
 	<div class="card card-small mb-4">
 		<div class="card-header border-bottom">
-			<h6 class="m-0">Aktif Birimler</h6>
+			<h6 class="m-0">Aktif Kategoriler</h6>
 		</div>
 		<div class="card-body p-0 pb-2 text-center">
 			<table class="table mb-0">
 				<thead class="bg-light">
 					<tr>
 						<th scope="col" class="border-0">#</th>
-						<th scope="col" class="border-0">Birim Adı</th>
-						<th scope="col" class="border-0">Birimi Pasife Al</th>
-						<th scope="col" class="border-0">Birimi Güncelle</th>
+						<th scope="col" class="border-0">Kategori Adı</th>
+						<th scope="col" class="border-0">Kategoriyi Pasife Al</th>
+						<th scope="col" class="border-0">Kategoriyi Güncelle</th>
 					</tr>
 				</thead>
 				<tbody>
-					@if (ViewBag.ActiveUnits != null)
+					@if (ViewBag.ActiveCategories != null)
 					{
 						var count = 0;
-						foreach (var unit in (IEnumerable<Unit>)ViewBag.ActiveUnits)
+						foreach (var category in (List<Category>)ViewBag.ActiveCategories)
 						{
 							count++;
 							<tr>
 								<td>@count</td>
-								<td>@unit.UnitName</td>
+								<td>@category.CategoryName</td>
 								<td>
 									<button class="btn btn-outline-danger"
 											data-toggle="modal"
 											data-target="#deleteModal"
-											onclick="setDeleteUnitData('@unit.UnitID', '@unit.UnitName')">
-										Birimi Pasife Al
+											onclick="setDeleteCategoryData('@category.CategoryID', '@category.CategoryName')">
+										Kategoriyi Pasife Al
 									</button>
 								</td>
 								<td>
-									<a href="/Admin/Unit/EditUnit/@unit.UnitID" class="btn btn-outline-warning">Birimi Güncelle</a>
+									<a href="/Admin/Category/EditCategory/@category.CategoryID" class="btn btn-outline-warning">Kategoriyi Güncelle</a>
 								</td>
 							</tr>
 						}
@@ -67,7 +66,7 @@
 					else
 					{
 						<tr>
-							<td colspan="4" class="alert alert-danger">Birim Bulunamadı</td>
+							<td colspan="4" class="alert alert-danger">Kategori Bulunamadı</td>
 						</tr>
 					}
 				</tbody>
@@ -80,42 +79,42 @@
 </div>
 
 <!-- Pasif Birimler Tablosu -->
-<div id="inactiveUnitsSection" style="display: none;">
+<div id="inactiveCategoriesSection" style="display: none;">
 	<div class="row">
 		<div class="col">
 			<div class="card card-small overflow-hidden mb-4">
 				<div class="card-header bg-dark">
-					<h6 class="m-0 text-white">Pasif Birimler</h6>
+					<h6 class="m-0 text-white">Pasif Kategoriler</h6>
 				</div>
 				<div class="card-body p-0 pb-3 bg-dark text-center">
 					<table class="table table-dark mb-0">
 						<thead class="thead-dark">
 							<tr>
 								<th scope="col" class="border-bottom-0">#</th>
-								<th scope="col" class="border-bottom-0">Birim Adı</th>
-								<th scope="col" class="border-bottom-0">Birimi Aktif Et</th>
-								<th scope="col" class="border-bottom-0">Birimi Güncelle</th>
+								<th scope="col" class="border-bottom-0">Kategori Adı</th>
+								<th scope="col" class="border-bottom-0">Kategoriyi Aktif Et</th>
+								<th scope="col" class="border-bottom-0">Kategoriyi Güncelle</th>
 						</thead>
 						<tbody>
-							@if (ViewBag.InactiveUnits != null)
+							@if (ViewBag.InactiveCategories != null)
 							{
 								var count = 0;
-								foreach (var unit in (IEnumerable<Unit>)ViewBag.InactiveUnits)
+								foreach (var category in (List<Category>)ViewBag.InactiveCategories)
 								{
 									count++;
 									<tr>
 										<td>@count</td>
-										<td>@unit.UnitName</td>
+										<td>@category.CategoryName</td>
 										<td>
 											<button class="btn btn-outline-success"
 													data-toggle="modal"
 													data-target="#activateModal"
-													onclick="setActivateUnitData('@unit.UnitID', '@unit.UnitName')">
-												Birimi Aktif Et
+													onclick="setActivateCategoryData('@category.CategoryID', '@category.CategoryName')">
+												Kategoriyi Aktif Et
 											</button>
 										</td>
 										<td>
-											<a href="/Admin/Unit/EditUnit/@unit.UnitID" class="btn btn-outline-warning">Birimi Güncelle</a>
+											<a href="/Admin/Category/EditCategory/@category.CategoryID" class="btn btn-outline-warning">Kategoriyi Güncelle</a>
 										</td>
 									</tr>
 								}
@@ -124,7 +123,7 @@
 							{
 								<tr>a</tr>
 								<tr>
-									<td colspan="4" class="alert alert-danger">Birim Bulunamadı</td>
+									<td colspan="4" class="alert alert-danger">Kategori Bulunamadı</td>
 								</tr>
 							}
 						</tbody>
@@ -136,14 +135,14 @@
 </div>
 
 <br />
-<br/>
+<br />
 
 <!-- Modals for Deactivate and Activate -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="deleteModalLabel">Birimi Pasife Al</h5>
+				<h5 class="modal-title" id="deleteModalLabel">Kategoriyi Pasife Al</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -163,7 +162,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="activateModalLabel">Birimi Aktif Et</h5>
+				<h5 class="modal-title" id="activateModalLabel">Kategoriyi Aktif Et</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -181,28 +180,28 @@
 
 <!-- JavaScript for setting the modal data and handling delete/activate confirmation -->
 <script type="text/javascript">
-	function setDeleteUnitData(unitId, unitName) {
-		document.getElementById('deleteModalBody').innerText = unitName + " birimini pasife almak istediğinize emin misiniz?";
+	function setDeleteCategoryData(categoryId, categoryName) {
+		document.getElementById('deleteModalBody').innerText = categoryName + " kategorisini pasife almak istediğinize emin misiniz?";
 		document.getElementById('confirmDeleteBtn').onclick = function () {
-			window.location.href = '/Admin/Unit/DeactivateUnit/' + unitId;
+			window.location.href = '/Admin/Category/DeactivateCategory/' + categoryId;
 		};
 	}
 
-	function setActivateUnitData(unitId, unitName) {
-		document.getElementById('activateModalBody').innerText = unitName + " birimini aktife almak istediğinize emin misiniz?";
+	function setActivateCategoryData(categoryId, categoryName) {
+		document.getElementById('activateModalBody').innerText = categoryName + " kategorisini aktife almak istediğinize emin misiniz?";
 		document.getElementById('confirmActivateBtn').onclick = function () {
-			window.location.href = '/Admin/Unit/ActivateUnit/' + unitId;
+			window.location.href = '/Admin/Category/ActivateCategory/' + categoryId;
 		};
 	}
 
-	function showActiveUnits() {
-		document.getElementById('activeUnitsSection').style.display = 'block';
-		document.getElementById('inactiveUnitsSection').style.display = 'none';
+	function showActiveCategories() {
+		document.getElementById('activeCategoriesSection').style.display = 'block';
+		document.getElementById('inactiveCategoriesSection').style.display = 'none';
 	}
 
-	function showInactiveUnits() {
-		document.getElementById('activeUnitsSection').style.display = 'none';
-		document.getElementById('inactiveUnitsSection').style.display = 'block';
+	function showInactiveCategories() {
+		document.getElementById('activeCategoriesSection').style.display = 'none';
+		document.getElementById('inactiveCategoriesSection').style.display = 'block';
 	}
 
 </script>

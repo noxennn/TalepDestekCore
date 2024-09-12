@@ -39,7 +39,10 @@ namespace BusinessLayer.Container
             services.AddScoped<IUnitService, UnitManager>();
             services.AddScoped<IUnitDal, EfUnitDal>();
 
-			services.AddScoped<IValidator<AppUserSignUpDTO>, AppUserSignUpValidator>();
+            services.AddScoped<IOfficerUnitService, OfficerUnitManager>();
+            services.AddScoped<IOfficerUnitDal, EfOfficerUnitDal>();
+
+            services.AddScoped<IValidator<AppUserSignUpDTO>, AppUserSignUpValidator>();
 			services.AddScoped<IValidator<AppUserSignInDTO>, AppUserSignInValidator>();
 		}
     }

@@ -18,12 +18,12 @@ namespace BusinessLayer.Concrete
             _unitDal = unitDal;
         }
 
-        public IEnumerable<Unit> TGetListofActiveUnits()
+        public List<Unit> TGetListofActiveUnits()
         {
             return _unitDal.GetListByFilter(u => u.Status == true);
         }
 
-        public IEnumerable<Unit> TGetListofInactiveUnits()
+        public List<Unit> TGetListofInactiveUnits()
         {
             return _unitDal.GetListByFilter(u => u.Status == false);
         }

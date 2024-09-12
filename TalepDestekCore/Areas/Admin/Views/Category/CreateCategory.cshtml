@@ -1,7 +1,7 @@
-﻿@using DTOLayer.DTOs.UnitDTOs
-@model CreateUnitDTO
+﻿@using DTOLayer.DTOs.CategoryDTOs
+@model CreateCategoryDTO
 @{
-    ViewData["Title"] = "CreateUnit";
+    ViewData["Title"] = "CreateCategory";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -10,16 +10,16 @@
 	<div class="col">
 		<div class="card card-small mb-4">
 			<div class="card-header border-bottom">
-				<h6 class="m-0">Birim Ekle</h6>
+				<h6 class="m-0">Kategori Ekle</h6>
 			</div>
 			<div class="card-body pb-2">
 				<div class="row">
 					<div class="col-sm-12 col-md-6">
 						<form method="post">
 							<div class="form-group col-md-6">
-								<input type="text" class="form-control" asp-for="UnitName" placeholder="Kategori adını giriniz">
+								<input type="text" class="form-control" asp-for="CategoryName" placeholder="Kategori adını giriniz">
 								<br />
-								<button class="btn btn-outline-primary"> Birimi Ekle</button>
+								<button class="btn btn-outline-primary"> Kategoriyi Ekle</button>
 							</div>
 						</form>
 					</div>
@@ -28,5 +28,5 @@
 		</div>
 	</div>
 </div>
-<a href="/Admin/Unit/Index" class="btn btn-outline-danger pl-4 pr-4">İptal</a>
+<a href="/Admin/Category/Index" class="btn btn-outline-danger pl-4 pr-4">İptal</a>
 

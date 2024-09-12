@@ -1,8 +1,7 @@
-﻿@using DTOLayer.DTOs.UnitDTOs
-@model EditUnitDTO
-
+﻿@using DTOLayer.DTOs.CategoryDTOs
+@model EditCategoryDTO
 @{
-    ViewData["Title"] = "EditUnit";
+    ViewData["Title"] = "EditCategory";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -11,18 +10,18 @@
 	<div class="col">
 		<div class="card card-small mb-4">
 			<div class="card-header border-bottom">
-				<h6 class="m-0">Birim Güncelle</h6>
+				<h6 class="m-0">Kategori Güncelle</h6>
 			</div>
 			<div class="card-body pb-2 ">
 				<div class="row">
 					<div class="col-md-6">
 						<form method="post">
-							@Html.HiddenFor(x => x.UnitID)
+							@Html.HiddenFor(x => x.CategoryID)
 							<div class="form-group">
-								<label>Birim Adı: </label>
-								<input type="text" class="form-control" asp-for="UnitName" />
+								<label>Kategori Adı: </label>
+								<input type="text" class="form-control" asp-for="CategoryName" />
 							</div>
-							<button class="btn btn-outline-primary">Birimi Güncelle</button>
+							<button class="btn btn-outline-primary">Kategoriyi Güncelle</button>
 						</form>
 					</div>
 				</div>
@@ -36,4 +35,5 @@
 	</div>
 </div>
 
-<a href="/Admin/Unit/Index" class="btn btn-outline-danger pl-4 pr-4">İptal</a>
+<a href="/Admin/Category/Index" class="btn btn-outline-danger">İptal</a>
+

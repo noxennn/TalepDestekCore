@@ -22,5 +22,7 @@ namespace EntityLayer.Concrete
         public ICollection<RequestActivity> AssignedActivities { get; set; }
         public ICollection<RequestActivity> RequestActivities { get; set; }
 
-    }
+
+		public ICollection<OfficerUnit> OfficerUnits { get; set; } // İlişkili birimler
+	}
 }

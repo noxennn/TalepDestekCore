@@ -4,6 +4,7 @@ using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240911113527_add_table_officerunits")]
+    partial class add_table_officerunits
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +38,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("ActivityID");
 
-                    b.ToTable("Activities", (string)null);
+                    b.ToTable("Activities");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.AppRole", b =>
@@ -164,7 +167,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("CategoryID");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.OfficerUnit", b =>
@@ -187,7 +190,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("OfficerUnits", (string)null);
+                    b.ToTable("OfficerUnits");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Request", b =>
@@ -243,7 +246,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("RequestUserID");
 
-                    b.ToTable("Requests", (string)null);
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.RequestActivity", b =>
@@ -299,7 +302,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("RequestID");
 
-                    b.ToTable("RequestActivities", (string)null);
+                    b.ToTable("RequestActivities");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Unit", b =>
@@ -318,7 +321,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("UnitID");
 
-                    b.ToTable("Units", (string)null);
+                    b.ToTable("Units");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
