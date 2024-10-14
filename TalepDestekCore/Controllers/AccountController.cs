@@ -38,19 +38,19 @@ namespace TalepDestekCore.Controllers
                     var user = await _userManager.FindByNameAsync(p.UserName);
                     var roles = await _userManager.GetRolesAsync(user);
 
-                    if (roles.Contains("Admin"))
-                    {
-                        return RedirectToAction("Index", "Admin", new { area = "Admin" });
-                    }
-                    else if (roles.Contains("RequestOfficer"))
-                    {
-                        return RedirectToAction("Index", "RequestOfficer", new { area = "RequestOfficer" });
-                    }
-                    else if (roles.Contains("Student"))
-                    {
-                        return RedirectToAction("Index", "Student", new { area = "Student" });
-                    }
-                    else
+					if (roles.Contains("Admin"))
+					{
+						return RedirectToAction("Index", "Default", new { area = "Admin" });
+					}
+					else if (roles.Contains("RequestOfficer"))
+					{
+						return RedirectToAction("Index", "Default", new { area = "RequestOfficer" });
+					}
+					else if (roles.Contains("Student"))
+					{
+						return RedirectToAction("Index", "Default", new { area = "Student" });
+					}
+					else
                     {
                         ModelState.AddModelError(string.Empty, "Rolünüz bulunamadı, lütfen sistem yöneticinize başvurun.");
                         return View(p);
@@ -110,6 +110,7 @@ namespace TalepDestekCore.Controllers
 				if (p.Password == p.ConfirmPassword)
 				{
 					var result = await _userManager.CreateAsync(appUser, p.Password);
+					await _userManager.AddToRoleAsync(appUser, "Student");
 					if (result.Succeeded)
 					{
 						return RedirectToAction("SignIn", "Account");
@@ -125,6 +126,12 @@ namespace TalepDestekCore.Controllers
 			}
 			
 			return View(p);
+		}
+		[HttpGet]
+		public async Task<IActionResult> Logout()
+		{
+			await _signInManager.SignOutAsync();
+			return RedirectToAction("SignIn", "Account", new { area = "" });
 		}
 	}
 }

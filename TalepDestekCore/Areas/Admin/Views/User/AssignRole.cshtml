@@ -3,12 +3,15 @@
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>@ViewBag.UserName için Rol Atama</h1>
 
+<div class="page-header row no-gutters py-4">
+	<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+		<span class="text-uppercase page-subtitle">Rol Ata</span>
+		<h3 class="page-title">@ViewBag.Name @ViewBag.Surname İçin Rol atama</h3>
+		<h3 class="page-title">TC Kimlik No: @ViewBag.UserName</h3>
+	</div>
+</div>
 
-
-
-<br />
 <div class="row">
 	<div class="col">
 		<div class="card card-small mb-4">

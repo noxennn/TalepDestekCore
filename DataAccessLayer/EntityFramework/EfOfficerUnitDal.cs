@@ -21,8 +21,15 @@ namespace DataAccessLayer.EntityFramework
 
             }
         }
+		public List<int> GetOfficerIDsByUnitID(int unitID)
+		{
+            using (var c = new Context())
+            {
+                return c.OfficerUnits.Where(x=>x.UnitID==unitID).Select(x=>x.UserID).ToList();
+            }
+		}
 
-        public void RemoveOfficerUnit(int unitID, int officerID)
+		public void RemoveOfficerUnit(int unitID, int officerID)
         {
             using (var context = new Context())
             {
@@ -50,5 +57,7 @@ namespace DataAccessLayer.EntityFramework
                 context.SaveChanges();
             }
         }
-    }
+
+		
+	}
 }

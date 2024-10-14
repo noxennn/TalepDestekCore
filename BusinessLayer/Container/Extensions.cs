@@ -1,9 +1,11 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules.AppUserValidationRules;
+using BusinessLayer.ValidationRules.ProfileValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using DTOLayer.DTOs.AppUserDTOs;
+using DTOLayer.DTOs.ProfileDTOs;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -42,8 +44,14 @@ namespace BusinessLayer.Container
             services.AddScoped<IOfficerUnitService, OfficerUnitManager>();
             services.AddScoped<IOfficerUnitDal, EfOfficerUnitDal>();
 
+
             services.AddScoped<IValidator<AppUserSignUpDTO>, AppUserSignUpValidator>();
+
 			services.AddScoped<IValidator<AppUserSignInDTO>, AppUserSignInValidator>();
+
+			services.AddScoped<IValidator<ChangePasswordDTO>, ProfileChangePasswordValidator>();
+
+
 		}
     }
 }

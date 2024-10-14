@@ -56,6 +56,7 @@ namespace TalepDestekCore.Areas.Admin.Controllers
 			}
 
 		}
+
 		[Route("DeleteRole/{id}")]
 		public async Task<IActionResult> DeleteRole(int id)
 		{

@@ -1,0 +1,105 @@
+﻿@using DTOLayer.DTOs.RequestDTOs
+@model SendRequestDTO
+@{
+    ViewData["Title"] = "NewRequest";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<div class="page-header row no-gutters py-4">
+	<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+		<span class="text-uppercase page-subtitle">Yeni Talep </span>
+	</div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+        <div class="card card-small mb-4">
+            <div class="card-header border-bottom">
+                <h6 class="m-0">Talep Oluştur</h6>
+            </div>
+            <div class="card-body pb-2">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <form method="post" enctype="multipart/form-data">
+                            <!-- Kategori Seçimi -->
+                            <div class="form-row align-items-center mb-3">
+                                <div class="col-md-4">
+                                    <label class="text-info">Kategori :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.RequestCategoryID, (List<SelectListItem>)ViewBag.Categories, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <!-- Sorumlu Birim Seçimi -->
+                            <div class="form-row align-items-center mb-3">
+                                <div class="col-md-4">
+                                    <label class="text-info" >Sorumlu Birim :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.RequestUnitID, (List<SelectListItem>)ViewBag.Units, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <!-- Talep Başlığı -->
+                            <div class="form-row align-items-center mb-3">
+                                <div class="col-md-4">
+                                    <label class="text-info">Talep Başlığı :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" asp-for="RequestTitle" placeholder="Talep başlığını giriniz">
+                                </div>
+                            </div>
+
+                            <!-- Açıklama -->
+                            <div class="form-row align-items-center mb-3">
+                                <div class="col-md-4">
+                                    <label class="text-info">Açıklamanız :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <textarea class="form-control" asp-for="RequestDescription" rows="6" placeholder="Açıklamanızı giriniz"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Dosya Yükleme -->
+                            <div class="form-row align-items-center mb-3">
+                                <div class="col-md-4">
+                                    <label class="text-info" >Dosya Yükle :</label>
+                                    <small class="form-text text-danger">(Boyut Yalnızca 10MB'a kadar olan PDF, JPEG, JPG ve PNG dosyaları ya da sıkıştırılmış dosyalar (.zip , .rar
+                                         .7zip) yükleyebilirsiniz. )</small>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="file" class="form-control-file" name="requestFile" accept=".pdf,.jpeg,.jpg,.png,.zip,.rar,.7zip">
+                                    
+                                </div>
+                            </div>
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-danger">
+                                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                    {
+                                        <p>@error.ErrorMessage</p>
+                                    }
+                                </div>
+                            }
+
+                            <!-- Gönder Butonu -->
+                            <div class="form-row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-8">
+                                    <button type="submit" class="btn btn-outline-primary">Talebi Oluştur</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<a href="/Student/Request/MyRequests" class="btn btn-outline-danger pl-4 pr-4">İptal</a>
+

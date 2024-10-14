@@ -2,6 +2,7 @@
 using DTOLayer.DTOs.CategoryDTOs;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using TalepDestekCore.Areas.Admin.Models;
 
 namespace TalepDestekCore.Areas.Admin.Controllers
 {
@@ -16,15 +17,21 @@ namespace TalepDestekCore.Areas.Admin.Controllers
 			_categoryService = categoryService;
 		}
 		[Route("Index")]
-		public IActionResult Index()
+		public IActionResult Index(bool showInactiveCategories = false)
         {
 			var activeCategories = _categoryService.TGetListofActiveCategories();
 			ViewBag.ActiveCategories = activeCategories;
 
 			var inactiveCategories = _categoryService.TGetListofInactiveCategories();
 			ViewBag.InactiveCategories = inactiveCategories;
+			var categoryView = new CategoryViewModel
+			{
+				ActiveCategories = activeCategories,
+				InactiveCategories =inactiveCategories,
+				ShowInactiveCategories = showInactiveCategories
+			};
 
-			return View();
+			return View(categoryView);
         }
 
 		[HttpGet]

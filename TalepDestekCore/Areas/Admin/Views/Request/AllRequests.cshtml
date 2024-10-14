@@ -1,0 +1,202 @@
+﻿
+@using TalepDestekCore.Areas.Student.Models
+@model StudentRequestsViewModel
+
+@{
+	ViewData["Title"] = "MyRequests";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	int count = 0;
+}
+
+<div class="page-header row no-gutters py-4">
+	<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+		<span class="text-uppercase page-subtitle">Bütün Talepler</span>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col ml-1">
+		<div class="btn-group" role="group" aria-label="Request Filter">
+			<a href="@Url.Action("MyRequests", new { showInactiveRequests = false })" class="btn btn-primary">Aktif Bütün Talepler</a>
+			<a href="@Url.Action("MyRequests", new { showInactiveRequests = true })" class="btn btn-secondary">Sonuçlanmış Bütün Talepler</a>
+		</div>
+	</div>
+</div>
+
+<br />
+<br />
+@if (!Model.ShowInactiveRequests)
+{
+	<div class="row">
+		<div class="col">
+			<div class="card card-small mb-4">
+				<div class="card-header border-bottom">
+					<h6 class="m-0">Aktif Bütün Talepler</h6>
+				</div>
+				<div class="card-body p-0 pb-2 text-center">
+					<table class="table mb-0">
+						<thead class="bg-light">
+							<tr>
+								<th scope="col" class="border-0">#</th>
+								<th scope="col" class="border-0">Talep No</th>
+								<th scope="col" class="border-0">Kategori</th>
+								<th scope="col" class="border-0">Talep Başlığı</th>
+								<th scope="col" class="border-0">Talep Tarihi</th>
+								<th scope="col" class="border-0">Talep Edilen Birim</th>
+								<th scope="col" class="border-0">Durum</th>
+								<th scope="col" class="border-0">Detaylar</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model.ActiveRequests)
+							{
+								count++;
+								<tr>
+									<td>@count</td>
+									<td><span class="font-weight-bold ">@item.RequestID</span></td>
+									<td><span class="font-weight-bold text-black">@item.Category.CategoryName</span></td>
+									<td>@item.RequestTitle</td>
+									<td><i class="far fa-clock text-success"></i> @item.RequestDate.ToString("d MMM yyyy-HH:mm")</td>
+									<td><span class="font-weight-bold text-black">@item.Unit.UnitName</span></td>
+									<td>
+										@{
+											string statusClass = "";
+											string iconClass = "";
+											string statusText = item.Activity.ActivityName;
+
+											switch (item.RequestLastActivityID)
+											{
+												case 1: // Beklemede
+													statusClass = "text-warning";
+													iconClass = "fas fa-clock"; // Saat simgesi
+													break;
+												case 2: // İşlem Devam Ediyor
+													statusClass = "text-primary";
+													iconClass = "fas fa-spinner"; // Devam eden işlem simgesi
+													break;
+												case 3: // İptal Edildi
+													statusClass = "text-danger";
+													iconClass = "fas fa-times"; // Çarpı işareti
+													break;
+												case 4: // Olumlu Sonuçlandı
+													statusClass = "text-success";
+													iconClass = "fas fa-check"; // Yeşil tik
+													break;
+												case 5: // Olumsuz Sonuçlandı
+													statusClass = "text-danger";
+													iconClass = "fas fa-times"; // Kırmızı çarpı işareti
+													break;
+												default:
+													statusClass = "text-secondary"; // Default durum
+													iconClass = "fas fa-question"; // Bilinmeyen durum simgesi
+													break;
+											}
+										}
+										<span class="@statusClass">
+											<i class="@iconClass"></i> @statusText
+										</span>
+									</td>
+									<td><a href="/Admin/Request/Details/@item.RequestID" class="btn btn-outline-info">Detaylar</a></td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+else
+{
+	<div class="row">
+		<div class="col">
+			<div class="card card-small mb-4">
+				<div class="card-header bg-dark border-bottom">
+					<h6 class="m-0 text-white">Sonuçlanmış Bütün Talepler</h6>
+				</div>
+				<div class="card-body p-0 pb-2 bg-dark text-center">
+					<table class="table mb-0 table-dark">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col" class="border-0">#</th>
+								<th scope="col" class="border-0">Talep No</th>
+								<th scope="col" class="border-0">Kategori</th>
+								<th scope="col" class="border-0">Talep Başlığı</th>
+								<th scope="col" class="border-0">Talep Tarihi</th>
+								<th scope="col" class="border-0">Talep Edilen Birim</th>
+								<th scope="col" class="border-0">Durum</th>
+								<th scope="col" class="border-0">Detaylar</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (Model.InactiveRequests.Any())
+							{
+								@foreach (var item in Model.InactiveRequests)
+								{
+									count++;
+									<tr>
+										<td>@count</td>
+										<td><span class="font-weight-bold text-purple">@item.RequestID</span></td>
+										<td><span class="font-weight-bold">@item.Category.CategoryName</span></td>
+										<td>@item.RequestTitle</td>
+										<td><i class="far fa-clock text-success"></i> @item.RequestDate.ToString("d MMM yyyy-HH:mm")</td>
+										<td>@item.Unit.UnitName</td>
+										<td>
+											@{
+												string statusClass = "";
+												string iconClass = "";
+												string statusText = item.Activity.ActivityName;
+
+												switch (item.RequestLastActivityID)
+												{
+													case 1: // Beklemede
+														statusClass = "text-warning";
+														iconClass = "fas fa-clock"; // Saat simgesi
+														break;
+													case 2: // İşlem Devam Ediyor
+														statusClass = "text-primary";
+														iconClass = "fas fa-spinner"; // Devam eden işlem simgesi
+														break;
+													case 3: // İptal Edildi
+														statusClass = "text-danger";
+														iconClass = "fas fa-times"; // Çarpı işareti
+														break;
+													case 4: // Olumlu Sonuçlandı
+														statusClass = "text-success";
+														iconClass = "fas fa-check"; // Yeşil tik
+														break;
+													case 5: // Olumsuz Sonuçlandı
+														statusClass = "text-danger";
+														iconClass = "fas fa-times"; // Kırmızı çarpı işareti
+														break;
+													default:
+														statusClass = "text-secondary"; // Default durum
+														iconClass = "fas fa-question"; // Bilinmeyen durum simgesi
+														break;
+												}
+											}
+											<span class="@statusClass">
+												<i class="@iconClass"></i> @statusText
+											</span>
+										</td>
+										<td><a href="/Admin/Request/Details/@item.RequestID" class="btn btn-outline-info">Detaylar</a></td>
+									</tr>
+								}
+							}
+							else
+							{
+								<tr>
+									<td colspan="8" class="text-danger">Sonuçlanmış Talep Bulunamadı</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+
+
+

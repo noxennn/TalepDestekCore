@@ -35,7 +35,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("ActivityID");
 
-                    b.ToTable("Activities", (string)null);
+                    b.ToTable("Activities");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.AppRole", b =>
@@ -164,7 +164,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("CategoryID");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.OfficerUnit", b =>
@@ -187,7 +187,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("OfficerUnits", (string)null);
+                    b.ToTable("OfficerUnits");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Request", b =>
@@ -204,7 +204,7 @@ namespace DataAccessLayer.Migrations
                     b.Property<int?>("RequestCategoryID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("RequestDate")
+                    b.Property<DateTime>("RequestDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RequestDescription")
@@ -222,7 +222,7 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("RequestTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RequestUnitID")
+                    b.Property<int>("RequestUnitID")
                         .HasColumnType("int");
 
                     b.Property<int?>("RequestUserID")
@@ -243,7 +243,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("RequestUserID");
 
-                    b.ToTable("Requests", (string)null);
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.RequestActivity", b =>
@@ -254,7 +254,7 @@ namespace DataAccessLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestActivityID"));
 
-                    b.Property<DateTime?>("ActivityDate")
+                    b.Property<DateTime>("ActivityDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ActivityDescription")
@@ -272,16 +272,10 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("FileUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NewActivityStatusID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Priority")
-                        .HasColumnType("int");
-
                     b.Property<int?>("RequestActivityUserID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RequestID")
+                    b.Property<int>("RequestID")
                         .HasColumnType("int");
 
                     b.Property<bool?>("Status")
@@ -293,13 +287,11 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("AssignedUserID");
 
-                    b.HasIndex("NewActivityStatusID");
-
                     b.HasIndex("RequestActivityUserID");
 
                     b.HasIndex("RequestID");
 
-                    b.ToTable("RequestActivities", (string)null);
+                    b.ToTable("RequestActivities");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Unit", b =>
@@ -318,7 +310,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("UnitID");
 
-                    b.ToTable("Units", (string)null);
+                    b.ToTable("Units");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -463,7 +455,8 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("EntityLayer.Concrete.Unit", "Unit")
                         .WithMany("Requests")
                         .HasForeignKey("RequestUnitID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.AppUser", "User")
                         .WithMany("SentRequests")
@@ -493,11 +486,6 @@ namespace DataAccessLayer.Migrations
                         .HasForeignKey("AssignedUserID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("EntityLayer.Concrete.Activity", "NewActivity")
-                        .WithMany("NewRequestActivities")
-                        .HasForeignKey("NewActivityStatusID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("EntityLayer.Concrete.AppUser", "RequestActivityUser")
                         .WithMany("RequestActivities")
                         .HasForeignKey("RequestActivityUserID")
@@ -506,13 +494,12 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("EntityLayer.Concrete.Request", "Request")
                         .WithMany("RequestActivities")
                         .HasForeignKey("RequestID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Activity");
 
                     b.Navigation("AssignedUser");
-
-                    b.Navigation("NewActivity");
 
                     b.Navigation("Request");
 
@@ -572,8 +559,6 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("EntityLayer.Concrete.Activity", b =>
                 {
-                    b.Navigation("NewRequestActivities");
-
                     b.Navigation("RequestActivities");
 
                     b.Navigation("Requests");

@@ -1,93 +1,93 @@
-﻿@{
+﻿@using TalepDestekCore.Areas.Admin.Models
+@model CategoryViewModel
+@{
 	ViewData["Title"] = "Index";
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<br />
-<span class="text-uppercase page-subtitle ml-1">Kategoriler</span>
-<br />
-<br />
-<div class="row">
+<div class="page-header row no-gutters py-4">
+	<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+		<span class="text-uppercase page-subtitle">Kategoriler</span>
+	</div>
+</div>
+
+<div class="row ">
 	<div class="col ml-1">
-		<div class="btn-group" role="group" aria-label="Unit Status">
-			<button type="button" class="btn btn-primary" onclick="showActiveCategories()">Aktif Kategorileri Göster</button>
-			<button type="button" class="btn btn-secondary" onclick="showInactiveCategories()">Pasif Kategorileri Göster</button>
+		<div class="btn-group" role="group" aria-label="Category Filter">
+			<a href="@Url.Action("Index", new { showInactiveCategories = false })" class="btn btn-primary">Aktif Kategoriler</a>
+			<a href="@Url.Action("Index", new { showInactiveCategories = true })" class="btn btn-secondary">İnaktif Kategoriler</a>
 		</div>
 		<a href="/Admin/Category/CreateCategory/" class="btn btn-outline-primary ml-5">Kategori Ekle</a>
 	</div>
-
 </div>
-<!-- Butonlar için Button Group -->
-
-
 <br />
 <br />
 
-<!-- Aktif Birimler Tablosu -->
-<div id="activeCategoriesSection">
-	<div class="card card-small mb-4">
-		<div class="card-header border-bottom">
-			<h6 class="m-0">Aktif Kategoriler</h6>
-		</div>
-		<div class="card-body p-0 pb-2 text-center">
-			<table class="table mb-0">
-				<thead class="bg-light">
-					<tr>
-						<th scope="col" class="border-0">#</th>
-						<th scope="col" class="border-0">Kategori Adı</th>
-						<th scope="col" class="border-0">Kategoriyi Pasife Al</th>
-						<th scope="col" class="border-0">Kategoriyi Güncelle</th>
-					</tr>
-				</thead>
-				<tbody>
-					@if (ViewBag.ActiveCategories != null)
-					{
-						var count = 0;
-						foreach (var category in (List<Category>)ViewBag.ActiveCategories)
-						{
-							count++;
+@if (!Model.ShowInactiveCategories)
+{
+	<div class="row">
+		<div class="col">
+			<div class="card card-small mb-4">
+				<div class="card-header border-bottom">
+					<h6 class="m-0">Aktif Kategoriler</h6>
+				</div>
+				<div class="card-body p-0 pb-2 text-center">
+					<table class="table mb-0">
+						<thead class="bg-light">
 							<tr>
-								<td>@count</td>
-								<td>@category.CategoryName</td>
-								<td>
-									<button class="btn btn-outline-danger"
-											data-toggle="modal"
-											data-target="#deleteModal"
-											onclick="setDeleteCategoryData('@category.CategoryID', '@category.CategoryName')">
-										Kategoriyi Pasife Al
-									</button>
-								</td>
-								<td>
-									<a href="/Admin/Category/EditCategory/@category.CategoryID" class="btn btn-outline-warning">Kategoriyi Güncelle</a>
-								</td>
+								<th scope="col" class="border-0">#</th>
+								<th scope="col" class="border-0">Kategori Adı</th>
+								<th scope="col" class="border-0">Kategoriyi Pasife Al</th>
+								<th scope="col" class="border-0">Kategoriyi Güncelle</th>
 							</tr>
-						}
-					}
-					else
-					{
-						<tr>
-							<td colspan="4" class="alert alert-danger">Kategori Bulunamadı</td>
-						</tr>
-					}
-				</tbody>
-			</table>
-			<div>
+						</thead>
+						<tbody>
+							@if (Model.ActiveCategories != null)
+							{
+								var count = 0;
+								foreach (var category in Model.ActiveCategories)
+								{
+									count++;
+									<tr>
+										<td>@count</td>
+										<td>@category.CategoryName</td>
+										<td>
+											<button class="btn btn-outline-danger"
+													data-toggle="modal"
+													data-target="#deleteModal"
+													onclick="setDeleteCategoryData('@category.CategoryID', '@category.CategoryName')">
+												Kategoriyi Pasife Al
+											</button>
+										</td>
+										<td>
+											<a href="/Admin/Category/EditCategory/@category.CategoryID" class="btn btn-outline-warning">Kategoriyi Güncelle</a>
+										</td>
+									</tr>
+								}
+							}
+							else
+							{
+								<tr>
+									<td colspan="4" class="alert alert-danger">Kategori Bulunamadı</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
-
-</div>
-
-<!-- Pasif Birimler Tablosu -->
-<div id="inactiveCategoriesSection" style="display: none;">
+}
+else
+{
 	<div class="row">
 		<div class="col">
-			<div class="card card-small overflow-hidden mb-4">
-				<div class="card-header bg-dark">
-					<h6 class="m-0 text-white">Pasif Kategoriler</h6>
+			<div class="card card-small mb-4">
+				<div class="card-header bg-dark border-bottom">
+					<h6 class="m-0 text-white">İnaktif Kategoriler</h6>
 				</div>
-				<div class="card-body p-0 pb-3 bg-dark text-center">
-					<table class="table table-dark mb-0">
+				<div class="card-body p-0 pb-2 bg-dark text-center">
+					<table class="table mb-0 table-dark">
 						<thead class="thead-dark">
 							<tr>
 								<th scope="col" class="border-bottom-0">#</th>
@@ -99,7 +99,7 @@
 							@if (ViewBag.InactiveCategories != null)
 							{
 								var count = 0;
-								foreach (var category in (List<Category>)ViewBag.InactiveCategories)
+								foreach (var category in Model.InactiveCategories)
 								{
 									count++;
 									<tr>
@@ -132,10 +132,7 @@
 			</div>
 		</div>
 	</div>
-</div>
-
-<br />
-<br />
+}
 
 <!-- Modals for Deactivate and Activate -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -193,15 +190,4 @@
 			window.location.href = '/Admin/Category/ActivateCategory/' + categoryId;
 		};
 	}
-
-	function showActiveCategories() {
-		document.getElementById('activeCategoriesSection').style.display = 'block';
-		document.getElementById('inactiveCategoriesSection').style.display = 'none';
-	}
-
-	function showInactiveCategories() {
-		document.getElementById('activeCategoriesSection').style.display = 'none';
-		document.getElementById('inactiveCategoriesSection').style.display = 'block';
-	}
-
 </script>

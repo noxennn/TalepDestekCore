@@ -1,0 +1,121 @@
+﻿@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_RequestOfficerLayout.cshtml";
+	var MyRequestsPendingCount = ViewBag.MyRequestsPendingCount != null ? ViewBag.MyRequestsPendingCount : 0;
+	var MyRequestsActiveCount = ViewBag.MyRequestsActiveCounts != null ? ViewBag.MyRequestsActiveCounts : 0;
+	var MyRequestsInactiveCount = ViewBag.MyRequestsInactiveCounts != null ? ViewBag.MyRequestsInactiveCounts : 0;
+
+
+	var RequestsPendingCount = ViewBag.RequestsPendingCounts != null ? ViewBag.RequestsPendingCounts : 0;
+	var RequestsActiveCount = ViewBag.RequestsActiveCounts != null ? ViewBag.RequestsActiveCounts : 0;
+	var RequestsInactiveCount = ViewBag.RequestsInactiveCounts != null ? ViewBag.RequestsInactiveCounts : 0;
+}
+
+<br />
+<span class="text-uppercase page-subtitle">Ana Sayfa</span>
+<br />
+<br />
+<div class="card card-small mb-4">
+	<div class="card-header border-bottom">
+		<h6 class="m-0">Gelen Talepler</h6>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<!-- Bekleyen Talepler Kartı -->
+			<div class="col-md-4">
+				<div class="card bg-warning text-white mb-3">
+					<div class="card-body">
+						<h5 class="card-title text-white">
+							<i class="fa fa-hourglass-start"></i> Bekleyen Talepler
+						</h5>
+						<p class="card-text">
+							@RequestsPendingCount
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Aktif Talepler Kartı -->
+			<div class="col-md-4">
+				<div class="card bg-primary text-white mb-3">
+					<div class="card-body">
+						<h5 class="card-title text-white">
+							<i class="fa fa-spinner"></i> Aktif Talepler
+						</h5>
+						<p class="card-text">
+							@RequestsActiveCount
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Kapatılmış Talepler Kartı -->
+			<div class="col-md-4">
+				<div class="card bg-success text-white mb-3">
+					<div class="card-body">
+						<h5 class="card-title text-white">
+							<i class="fa fa-check-circle"></i> Kapatılmış Talepler
+						</h5>
+						<p class="card-text">
+							@RequestsInactiveCount
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<br />
+<div class="card card-small mb-4">
+	<div class="card-header border-bottom">
+		<h6 class="m-0">Taleplerim</h6>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<!-- Bekleyen Talepler Kartı -->
+			<div class="col-md-4">
+				<div class="card bg-warning text-white mb-3">
+					<div class="card-body">
+						<h5 class="card-title text-white">
+							<i class="fa fa-hourglass-start"></i> Bekleyen Taleplerim
+						</h5>
+						<p class="card-text">
+							@MyRequestsPendingCount
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Aktif Talepler Kartı -->
+			<div class="col-md-4">
+				<div class="card bg-primary text-white mb-3">
+					<div class="card-body">
+						<h5 class="card-title text-white">
+							<i class="fa fa-spinner"></i> Aktif Taleplerim
+						</h5>
+						<p class="card-text">
+							@MyRequestsActiveCount
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Kapatılmış Talepler Kartı -->
+			<div class="col-md-4">
+				<div class="card bg-success text-white mb-3">
+					<div class="card-body">
+						<h5 class="card-title text-white">
+							<i class="fa fa-check-circle"></i> Kapatılmış Taleplerim
+						</h5>
+						<p class="card-text">
+							@MyRequestsInactiveCount
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+

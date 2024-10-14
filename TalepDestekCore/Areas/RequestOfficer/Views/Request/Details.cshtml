@@ -1,0 +1,238 @@
+﻿@using TalepDestekCore.Areas.RequestOfficer.Models
+@model RequestDetailsViewModel
+@{
+	ViewData["Title"] = "Details";
+	Layout = "~/Views/Shared/_RequestOfficerLayout.cshtml";
+	var successMessage = TempData["SuccessMessage"] as string;
+
+}
+@if (!string.IsNullOrEmpty(successMessage))
+{
+	<div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+		<i class="fa fa-check mx-2"></i>
+		<strong>Success!</strong> @successMessage
+	</div>
+}
+
+<div class="page-header row no-gutters py-4">
+	<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+		<span class="text-uppercase page-subtitle">Talep Ayrıntıları</span>
+		<a href="/RequestOfficer/Request/Requests" class="btn btn-outline-danger pl-4 pr-4">Geri Dön</a>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-md-7">
+		@if (ViewBag.OfficerUnits.Contains(Model.Request.RequestUnitID))
+		{
+			<div class="card mb-3">
+
+				<div class="card-header bg-warning text-white ">
+					<div class="d-flex justify-content-between">
+						İşlem Yap
+						<a href="/RequestOfficer/Request/AssignOfficer/@Model.Request.RequestID" class="btn btn-secondary pl-4 pr-4">Personele Havale Et</a>
+					</div>
+				</div>
+
+				<div class="card-body">
+					<form method="post" enctype="multipart/form-data">
+						<input type="hidden" asp-for="Request.RequestID" />
+						<input type="hidden" asp-for="Request.RequestUserID" />
+						<input type="hidden" asp-for="Request.RequestCategoryID" />
+						<input type="hidden" asp-for="Request.RequestLastActivityID" />
+						<input type="hidden" asp-for="Request.RequestUnitID" />
+						<input type="hidden" asp-for="Request.AssignedUserID" />
+						<input type="hidden" asp-for="Request.RequestTitle" />
+						<input type="hidden" asp-for="Request.RequestDescription" />
+						<input type="hidden" asp-for="Request.RequestDate" />
+						<input type="hidden" asp-for="Request.RequestFileUrl" />
+						<input type="hidden" asp-for="Request.RequestFileName" />
+						<input type="hidden" asp-for="Request.Status" />
+						<div class="form-group mb-3">
+							<label for="request-id" class="form-label"><strong>Talep No:</strong></label>
+							<input type="text" id="request-id" class="form-control bg-light-gray text-dark border-0 rounded-3" value="@Model.Request.RequestID" asp-for="OfficerActivity.RequestID" readonly>
+						</div>
+						<div class="form-group mb-3">
+							<label for="activity-description" class="form-label"><strong>Talep Açıklaması:</strong></label>
+							<textarea id="activity-description" class="form-control bg-light-gray text-dark border-0 rounded-3" rows="4" placeholder="Açıklama Giriniz" asp-for="OfficerActivity.ActivityDescription"></textarea>
+						</div>
+						<div class="form-group mb-3">
+							<label class="form-label">Dosya Yükle :</label>
+							<small class="form-text text-danger">
+								(Boyut Yalnızca 10MB'a kadar olan PDF, JPEG, JPG ve PNG dosyaları ya da sıkıştırılmış dosyalar (.zip , .rar .7zip) yükleyebilirsiniz.)
+							</small>
+							<input type="file" class="form-control" name="requestActivityFile" accept=".pdf,.jpeg,.jpg,.png,.zip,.rar,.7zip">
+						</div>
+						<div class="form-group mb-3">
+							<label class="form-label">Talebin Durumu :</label>
+							@Html.DropDownListFor(x => x.OfficerActivity.ActivityStatusID, (List<SelectListItem>)ViewBag.Activities, new { @class = "form-control" })
+						</div>
+						<div class="form-group">
+							<button class="btn btn-warning pl-4 pr-4">İşlem Yap</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		}
+		<br />
+		<!-- Request Activity Card -->
+		<div class="card mb-3">
+			<div class="card-header bg-info text-white">
+				Talep İşlemleri
+			</div>
+			<div class="card-body">
+				<!-- Activity 1 -->
+				@if (Model.RequestActivities.Any())
+				{
+					var latestActivity = Model.RequestActivities.First(); // İlk öğe en yenisi
+					@foreach (var item in Model.RequestActivities)
+					{
+						<div class="card mb-3 border-dark bg-light-gray">
+							<div class="card-header d-flex justify-content-between bg-light-gray border-bottom">
+								@if (item.RequestActivityUserID != null)
+								{
+									<div>İşlemi Yapan: @item.RequestActivityUser.Name @item.RequestActivityUser.Surname</div>
+								}
+								else
+								{
+									<div>Talep Oluşturuldu</div>
+								}
+								<div>Talebin Son Durumu: @item.Activity.ActivityName</div>
+								<div>@item.ActivityDate.ToString("d MMM yyyy HH:mm")</div>
+							</div>
+							<div class="card-body">
+								<p>@item.ActivityDescription</p>
+
+								@if (!string.IsNullOrEmpty(item.FileUrl) && !string.IsNullOrEmpty(item.FileName))
+								{
+									<div>
+										<a href="~/RequestActivityDocs/@item.FileUrl" download="~/RequestActivityDocs/@item.FileUrl" target="_blank" class="text-decoration-none">
+											Dosyayı İndir: @item.FileName
+										</a>
+									</div>
+									<br />
+								}
+
+								@if (item == latestActivity && item.RequestActivityUserID == ViewBag.CurrentUserID) // En yeni aktivite ve kullanıcının ID'sini kontrol et
+								{
+									<form method="post" action="@Url.Action("UndoActivity", new { id = item.RequestActivityID })">
+										<button type="submit" class="btn btn-danger">Geri Al</button>
+									</form>
+								}
+							</div>
+						</div>
+						<br />
+					}
+				}
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Right side: Request and User information -->
+	<div class="col-md-5">
+		<!-- Request Details Card -->
+		<div class="card mb-3">
+			<div class="card-header bg-primary text-white">
+				Talep Bilgileri
+			</div>
+			<div class="card-body">
+				<div class="form-group">
+					<label for="request-unit" class="form-label"><strong>Sorumlu Birim:</strong></label>
+					<input type="text" id="request-unit" class="form-control bg-light-gray text-dark border-0 rounded-3" value="@Model.Request.Unit.UnitName" readonly>
+				</div>
+				<div class="form-group">
+					<label for="request-category" class="form-label"><strong>Talep Kategorisi:</strong></label>
+					<input type="text" id="request-category" class="form-control bg-light-gray text-dark border-0 rounded-3" value="@Model.Request.Category.CategoryName" readonly>
+				</div>
+				<div class="form-group">
+					<label for="request-status" class="form-label"><strong>Talep Durumu:</strong></label>
+
+					<input type="text" id="request-status" class="form-control bg-light-gray text-dark border-0 rounded-3" value="@Model.Request.Activity.ActivityName" readonly>
+				</div>
+				<div class="form-group">
+					<label for="request-description" class="form-label"><strong>Talep Açıklaması:</strong></label>
+					<textarea id="request-description" class="form-control bg-light-gray text-dark border-0 rounded-3" rows="4" readonly>@Model.Request.RequestDescription</textarea>
+				</div>
+				<div class="form-group">
+					<label for="file-link" class="form-label"><strong>Ek Dosya:</strong></label>
+					@if (!string.IsNullOrEmpty(Model.Request.RequestFileName))
+					{
+						<a href="~/RequestDocs/@Model.Request.RequestFileUrl" download="@Model.Request.RequestFileName" target="_blank" class="text-decoration-none">
+							<i class="fas fa-paperclip"></i> @Model.Request.RequestFileName
+						</a>
+					}
+					else
+					{
+						<span>Ek dosya yok.</span>
+					}
+				</div>
+
+			</div>
+		</div>
+
+		<!-- User Information Card -->
+		<div class="card mb-3">
+			<div class="card-header bg-primary text-white">
+				Talep Eden Personel Bilgileri
+			</div>
+			<div class="card-body">
+				<div class="form-group">
+					<label for="tc-number" class="form-label"><strong>TC Kimlik Numarası:</strong></label>
+					<input type="text" id="tc-number" class="form-control bg-light-gray text-dark border-0 rounded-3" value="@Model.Request.User.UserName" readonly>
+				</div>
+				<div class="form-group">
+					<label for="full-name" class="form-label"><strong>Ad Soyad:</strong></label>
+					<input type="text" id="full-name" class="form-control bg-light-gray text-dark border-0 rounded-3" value="@Model.Request.User.Name @Model.Request.User.Surname" readonly>
+				</div>
+				<div class="form-group">
+					<label for="contact-info" class="form-label"><strong>İletişim Bilgileri:</strong></label>
+					<input type="text" id="contact-info" class="form-control bg-light-gray text-dark border-0 rounded-3" value="@Model.Request.User.Email | @Model.Request.User.PhoneNumber" readonly>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<style>
+	.form-group {
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+	}
+
+	.form-label {
+		margin-right: 1rem; /* Label ve input arasında boşluk */
+		width: 30%; /* Label'ın genişliğini belirleyin */
+	}
+
+	.form-control {
+		width: 70%; /* Input'un genişliğini belirleyin */
+	}
+
+	.card-body .form-group {
+		margin-bottom: 0.75rem; /* Form elemanları arasında boşluk */
+	}
+
+	.card.border-light {
+		border-color: #e9ecef; /* Açık border rengi */
+	}
+
+	.bg-dark {
+		background-color: #343a40 !important; /* Koyu arka plan */
+	}
+
+	.bg-light {
+		background-color: #f8f9fa !important; /* Açık arka plan */
+	}
+
+	.bg-light-gray {
+		background-color: /* #f1f3f5 */ #ebebeb !important; /* Açık gri arka plan */
+	}
+</style>
+

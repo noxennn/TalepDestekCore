@@ -1,31 +1,35 @@
-﻿
+﻿@using TalepDestekCore.Areas.Admin.Models
+@model UnitViewModel
 
 @{
 	ViewData["Title"] = "Index";
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<br />
-<span class="text-uppercase page-subtitle">Birimler</span>
-<br />
-<br />
-
-<!-- Butonlar için Button Group -->
-
-<div class="row">
-	<div class="col ml-1">
-		<div class="btn-group" role="group" aria-label="Unit Status">
-			<button type="button" class="btn btn-primary" onclick="showActiveUnits()">Aktif Birimleri Göster</button>
-			<button type="button" class="btn btn-secondary" onclick="showInactiveUnits()">Pasif Birimleri Göster</button>
-		</div>
-		<a href="/Admin/Unit/CreateUnit/" class="btn btn-outline-primary ml-5">Birim Ekle</a>
+<div class="page-header row no-gutters py-4">
+	<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+		<span class="text-uppercase page-subtitle">Birimler</span>
 	</div>
 </div>
-<br />
-<br />
+<!-- Butonlar için Button Group -->
 
-<!-- Aktif Birimler Tablosu -->
-<div id="activeUnitsSection">
+
+<div class="row ">
+	<div class="col ml-1">
+		<div class="btn-group" role="group" aria-label="Category Filter">
+			<a href="@Url.Action("Index", new { showInactiveUnits = false })" class="btn btn-primary">Aktif Birimleri Göster</a>
+			<a href="@Url.Action("Index", new { showInactiveUnits = true })" class="btn btn-secondary">Pasif Birimleri Göster</a>
+		</div>
+		<a href="/Admin/Category/CreateCategory/" class="btn btn-outline-primary ml-5">Kategori Ekle</a>
+	</div>
+</div>
+
+
+<br />
+<br 
+	<!-- Aktif Birimler Tablosu -->
+@if (!Model.ShowInactiveUnits)
+{
 	<div class="card card-small mb-4">
 		<div class="card-header border-bottom">
 			<h6 class="m-0">Aktif Birimler</h6>
@@ -41,10 +45,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if (ViewBag.ActiveUnits != null)
+					@if (Model.ActiveUnits != null)
 					{
 						var count = 0;
-						foreach (var unit in (IEnumerable<Unit>)ViewBag.ActiveUnits)
+						foreach (var unit in Model.ActiveUnits)
 						{
 							count++;
 							<tr>
@@ -77,10 +81,10 @@
 		</div>
 	</div>
 
-</div>
 
+}else
+{
 <!-- Pasif Birimler Tablosu -->
-<div id="inactiveUnitsSection" style="display: none;">
 	<div class="row">
 		<div class="col">
 			<div class="card card-small overflow-hidden mb-4">
@@ -97,10 +101,10 @@
 								<th scope="col" class="border-bottom-0">Birimi Güncelle</th>
 						</thead>
 						<tbody>
-							@if (ViewBag.InactiveUnits != null)
+							@if (Model.InactiveUnits != null)
 							{
 								var count = 0;
-								foreach (var unit in (IEnumerable<Unit>)ViewBag.InactiveUnits)
+								foreach (var unit in Model.InactiveUnits)
 								{
 									count++;
 									<tr>
@@ -133,8 +137,8 @@
 			</div>
 		</div>
 	</div>
-</div>
 
+}
 <br />
 <br/>
 
@@ -194,15 +198,4 @@
 			window.location.href = '/Admin/Unit/ActivateUnit/' + unitId;
 		};
 	}
-
-	function showActiveUnits() {
-		document.getElementById('activeUnitsSection').style.display = 'block';
-		document.getElementById('inactiveUnitsSection').style.display = 'none';
-	}
-
-	function showInactiveUnits() {
-		document.getElementById('activeUnitsSection').style.display = 'none';
-		document.getElementById('inactiveUnitsSection').style.display = 'block';
-	}
-
 </script>

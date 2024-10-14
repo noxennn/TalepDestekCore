@@ -9,5 +9,6 @@ namespace DataAccessLayer.Abstract
 {
     public interface IRequestActivityDal:IGenericDal<RequestActivity>
     {
+        public  List< RequestActivity> GetRequestActivityByRequestID(int requestID);
     }
 }

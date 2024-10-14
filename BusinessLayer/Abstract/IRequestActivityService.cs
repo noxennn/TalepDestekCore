@@ -9,5 +9,6 @@ namespace BusinessLayer.Abstract
 {
     public interface IRequestActivityService : IGenericService<RequestActivity>
     {
+        public List< RequestActivity> TGetRequestActivityByRequestID(int id);
     }
 }

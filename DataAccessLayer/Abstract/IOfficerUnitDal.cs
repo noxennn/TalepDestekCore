@@ -11,7 +11,11 @@ namespace DataAccessLayer.Abstract
     {
         public List<int> GetUnitIDsByOfficerID(int userId);
 
+        public List<int> GetOfficerIDsByUnitID(int unitID);
+
         public void RemoveOfficerUnit(int unitID,int officerID);
         public void AddOfficerUnit(int unitID,int officerID);
+
+
     }
 }

@@ -107,13 +107,6 @@ namespace DataAccessLayer.Concrete
                 .HasForeignKey(r => r.RequestActivityUserID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //NewActivityStatusID Foreign Key From Activity.ActivityID
-
-            modelBuilder.Entity<RequestActivity>()
-                .HasOne(r => r.NewActivity)
-                .WithMany(a => a.NewRequestActivities)
-                .HasForeignKey(r => r.NewActivityStatusID)
-                .OnDelete(DeleteBehavior.Restrict);
 
 			//Unit Claims
 			//NewActivityStatusID Foreign Key From Activity.ActivityID

@@ -23,7 +23,12 @@ namespace BusinessLayer.Concrete
             _requestActivityDal.Delete(t);
         }
 
-        public RequestActivity TGetByID(int id)
+		public List<RequestActivity> TGetRequestActivityByRequestID(int id)
+		{
+			return _requestActivityDal.GetRequestActivityByRequestID(id);
+		}
+
+		public RequestActivity TGetByID(int id)
         {
            return _requestActivityDal.GetByID(id);
         }

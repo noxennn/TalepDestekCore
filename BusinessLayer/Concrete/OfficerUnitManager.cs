@@ -25,10 +25,12 @@ namespace BusinessLayer.Concrete
             _officerUnitDal.Delete(t);
         }
 
+
         public OfficerUnit TGetByID(int id)
         {
            return _officerUnitDal.GetByID(id) ;
         }
+
 
         public List<OfficerUnit> TGetList()
         {
@@ -40,24 +42,35 @@ namespace BusinessLayer.Concrete
             return _officerUnitDal.GetUnitIDsByOfficerID(userId) ;
         }
 
-        public void TInsert(OfficerUnit t)
+		public List<int> TGetOfficerIDsByUnitID(int unitID)
+		{
+			return _officerUnitDal.GetOfficerIDsByUnitID(unitID) ;
+		}
+
+
+		public void TInsert(OfficerUnit t)
         {
             _officerUnitDal.Insert(t) ;
         }
+
 
         public void TRemoveOfficerUnit(int unitID, int officerID)
         {
             _officerUnitDal.RemoveOfficerUnit(unitID, officerID) ;
         }
+
+
         public void TAddOfficerUnit(int unitID, int officerID)
         {
             _officerUnitDal.AddOfficerUnit(unitID , officerID) ;
         }
+
 
         public void TUpdate(OfficerUnit t)
         {
             _officerUnitDal.Update(t) ;
         }
 
-    }
+		
+	}
 }

@@ -15,10 +15,10 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\RequestOfficer\Data\" />
-    <Folder Include="Areas\RequestOfficer\Models\" />
-    <Folder Include="Areas\RequestOfficer\Views\" />
     <Folder Include="Areas\Student\Data\" />
-    <Folder Include="Areas\Student\Models\" />
+    <Folder Include="wwwroot\RequestActivityDocs\" />
+    <Folder Include="wwwroot\RequestDocs\" />
+    <Folder Include="wwwroot\Userpfp\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,7 +37,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.8" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
     <PackageReference Include="X.PagedList" Version="10.0.3" />
     <PackageReference Include="X.Web.PagedList" Version="10.1.2" />
   </ItemGroup>

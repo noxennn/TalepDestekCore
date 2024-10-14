@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
+using DTOLayer.DTOs.OfficerDTOs;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,16 @@ namespace BusinessLayer.Concrete
             _appUserDal.Delete(t);
         }
 
-        public AppUser TGetByID(int id)
+		public List<AssignOfficerDTO> TGetAssignableOfficerList(List<int> OfficerIDs)
+		{
+			return _appUserDal.GetAssignableOfficerList(OfficerIDs);
+		}
+		public string TGetUserNameByUserID(int UserID)
+        {
+            return _appUserDal.GetUserNameByUserID(UserID);
+        }
+
+		public AppUser TGetByID(int id)
         {
             return _appUserDal.GetByID(id);
         }

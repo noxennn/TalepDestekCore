@@ -14,6 +14,6 @@ namespace EntityLayer.Concrete
         public string? ActivityName { get; set; } // Hareketin adı (Beklemede,İşlem Devam Ediyor, İptal Edildi,Olumlu , Olumsuz)
         public ICollection<Request> Requests { get; set; }
         public ICollection<RequestActivity> RequestActivities { get; set; }
-        public ICollection<RequestActivity> NewRequestActivities { get; set; }
+
     }
 }

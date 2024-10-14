@@ -10,7 +10,8 @@ namespace BusinessLayer.Abstract
     public interface IOfficerUnitService : IGenericService<OfficerUnit>
     {
         public List<int> TGetUnitIDsByOfficerID(int userId);
-        public void TRemoveOfficerUnit(int unitID,int officerID);
+		public List<int> TGetOfficerIDsByUnitID(int unitID);
+		public void TRemoveOfficerUnit(int unitID,int officerID);
         public void TAddOfficerUnit(int unitID,int officerID);
     }
 }

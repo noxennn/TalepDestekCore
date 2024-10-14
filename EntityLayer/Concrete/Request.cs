@@ -25,7 +25,7 @@ namespace EntityLayer.Concrete
         public Activity Activity { get; set; }  // foreign key
 
 
-        public int? RequestUnitID { get; set; }  // Talebin ait olduğu birim
+        public int RequestUnitID { get; set; }  // Talebin ait olduğu birim
         public Unit Unit { get; set; }  // foreign key
 
 
@@ -35,7 +35,7 @@ namespace EntityLayer.Concrete
 
         public string? RequestTitle { get; set; }  // Talep başlığı
         public string? RequestDescription { get; set; }  // Talep açıklaması
-        public DateTime? RequestDate { get; set; }  // Talep tarihi
+        public DateTime RequestDate { get; set; }  // Talep tarihi
        
 
         // Dosya URL'si (GUID'li URL)

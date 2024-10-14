@@ -1,0 +1,126 @@
+﻿@using DTOLayer.DTOs.ProfileDTOs
+@model EditProfileDTO
+@{
+    ViewData["Title"] = "User Profile";
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+<!-- Success Message Alert -->
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <i class="fa fa-check mx-2"></i>
+        <strong>Success!</strong> @successMessage
+    </div>
+}
+
+<div class="main-content-container container-fluid px-4">
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <span class="text-uppercase page-subtitle">Kullanıcı Profili</span>
+        </div>
+    </div>
+    <!-- End Page Header -->
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card card-small mb-4 pt-3">
+                <div class="card-header border-bottom text-center">
+                    <div class="mb-3 mx-auto">
+                        <img class="rounded-circle" src="~/Userpfp/@Model.ImageURL" alt="Kullanıcı Görseli" width="110">
+                    </div>
+                    <h4 class="mb-0">@Model.Name @Model.Surname</h4>
+                    <span class="text-muted d-block mb-2">
+                        @if (ViewBag.UserRole == "Student")
+                        {
+                            <text>Öğrenci</text>
+                        }
+                        else if (ViewBag.UserRole == "RequestOfficer")
+                        {
+                            <text>Talep Yetkilisi</text>
+                        }
+                        else if (ViewBag.UserRole == "Admin")
+                        {
+                            <text>Yönetici</text>
+                        }
+                    </span>
+                </div>
+                <ul class="list-group list-group-flush">
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card card-small mb-4">
+                <div class="card-header border-bottom">
+                    <h6 class="m-0">Account Details</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item p-3">
+                        <div class="row">
+                            <div class="col">
+                                <form method="post" enctype="multipart/form-data">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="hidden"  asp-for="Id" />
+                                            <label asp-for="Name">Adınız</label>
+                                            <input type="text" class="form-control" asp-for="Name" />
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="Surname">Soyadınız</label>
+                                            <input type="text" class="form-control" asp-for="Surname" />
+                                            <span asp-validation-for="Surname" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="Email">E-posta</label>
+                                            <input type="text" class="form-control" asp-for="Email" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Tc Kimlik No</label>
+                                            <input type="text" class="form-control" value="@ViewBag.UserTcKimlikNo" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="Gender" class="control-label">Cinsiyet</label>
+                                            <select asp-for="Gender" asp-items="ViewBag.GenderList" class="form-control">
+                                                <option value="">Cinsiyet Seçin</option>
+                                            </select>
+                                            <span asp-validation-for="Gender" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="PhoneNumber">Telefon Numaranız</label>
+                                            <input type="text" class="form-control" asp-for="PhoneNumber" />
+                                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>                    
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="profileImage">Profil Fotoğrafı Yükle</label>
+                                            <input type="file" class="form-control-file" id="profileImage" name="profileImage" accept=".jpg,.jpeg,.png" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <br />
+                                            <a href="/Profile/ChangePassword" class="btn btn-warning">Şifre Güncelle</a>
+                                        </div>
+                                    </div>
+                                    <button  class="btn btn-accent">Bilgilerimi Güncelle</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Default Light Table -->
+</div>
+
+<a href="/@ViewBag.UserRole/Default/Index" class="btn btn-outline-info pl-4 pr-4">Ana Sayfaya Dön</a>

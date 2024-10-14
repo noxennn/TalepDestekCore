@@ -8,7 +8,7 @@ namespace EntityLayer.Concrete
         [Key]
         public int RequestActivityID { get; set; }
 
-        public int? RequestID { get; set; }  // Talebin IDsi
+        public int RequestID { get; set; }  // Talebin IDsi
         public Request Request { get; set; }
 
 
@@ -24,15 +24,10 @@ namespace EntityLayer.Concrete
         public AppUser RequestActivityUser { get; set; }
 
 
-        public int? NewActivityStatusID { get; set; }        //İşlem Sonucu Talebin yeni Durumu
-        public Activity NewActivity { get; set; }
-
-
         public string? ActivityDescription { get; set; }   // İşlemin açıklaması
-        public DateTime? ActivityDate { get; set; }   // İşlemin yapıldığı tarih   
+        public DateTime ActivityDate { get; set; }   // İşlemin yapıldığı tarih   
         
 
-        public int? Priority { get; set; }           // Öncelik seviyesi
         public string? FileUrl { get; set; }         // İşleme ait dosya url
         public string? FileName { get; set; }         // İşleme ait dosya adı
         public bool? Status { get; set; } = true; 

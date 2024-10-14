@@ -11,7 +11,7 @@ using TalepDestekCore.Areas.Admin.Models;
 namespace TalepDestekCore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("Admin/User/")]
+    [Route("Admin/User")]
     public class UserController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
@@ -39,7 +39,7 @@ namespace TalepDestekCore.Areas.Admin.Controllers
                 Surname = u.Surname,
                 Gender = u.Gender,
                 Email = u.Email,
-                UserRole = _userManager.GetRolesAsync(u).Result.FirstOrDefault() // assuming single role per user
+                UserRole = _userManager.GetRolesAsync(u).Result.FirstOrDefault() // her kullanıcıda bir rol
             }).ToList();
 
 
