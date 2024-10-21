@@ -17,8 +17,21 @@ namespace DataAccessLayer.Repository
             c.Remove(t);
             c.SaveChanges();
         }
+		public void Insert(T t)
+		{
+			using var c = new Context();
+			c.Add(t);
+			c.SaveChanges();
+		}
 
-        public T GetByID(int id)
+		public void Update(T t)
+		{
+			using var c = new Context();
+			c.Update(t);
+			c.SaveChanges();
+		}
+
+		public T GetByID(int id)
         {
             using var c = new Context();
             return c.Set<T>().Find(id);
@@ -36,19 +49,7 @@ namespace DataAccessLayer.Repository
             return c.Set<T>().Where(Filter).ToList();
         }
 
-        public void Insert(T t)
-        {
-            using var c = new Context();
-            c.Add(t);
-            c.SaveChanges();
-        }
-
-        public void Update(T t)
-        {
-            using var c = new Context();
-            c.Update(t);
-            c.SaveChanges();
-        }
+       
     }
 
 }

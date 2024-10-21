@@ -116,6 +116,7 @@ namespace TalepDestekCore.Areas.RequestOfficer.Controllers
 			var currentActivityID = requestInfo.RequestLastActivityID;
 			var officerUnits = _officerUnitService.TGetUnitIDsByOfficerID(Convert.ToInt32(_userManager.GetUserId(User)));//Kullanıcının Unitlerini al
 			ViewBag.OfficerUnits = officerUnits;
+			ViewBag.AssignedUserID = requestInfo.AssignedUserID;
 			ViewBag.CurrentUserID = Convert.ToInt32(_userManager.GetUserId(User));
 			ViewBag.Activities = GetActivities(currentActivityID);
 
